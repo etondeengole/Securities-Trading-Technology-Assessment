@@ -1,0 +1,56 @@
+Create a ticket based system using angular 10 with material design and c# webapi dotnet core 3.1
+the following functionality must be implemented:
+
+1. View of current tickets on the system.
+2. Load a new ticket on the system.
+    you can load 2 diffrent ticket types, a bug with the following fields:
+		* Ticket Title 
+		* Ticket Date
+		* Ticket Description
+		* Ticket Effort
+	or you can load an enhancment on an existing system:
+		* Ticket Title 
+		* Ticket Date
+		* Ticket Description
+		* Ticket Effort
+		* Product 
+		* Client Description
+	
+3. Edit a ticket
+4. Delete a ticket 
+5. Change Ticket state (Current states)
+	* Done
+	* Testing
+	* Working on
+	* Not yet started
+
+
+Front-End:
+
+NB: 
+You are only allowed to use typescript. 
+You may not use "ANY" as an type. 
+You need to create the type in a class if you send it to the webapi.
+You need to implement the BaseService class
+You must use angular generate
+
+a. Create a new component called "view-tickets"
+b. Create a new base class called "ticket"
+c. Create a new class bug
+d. Create a new class enhancement 
+e. Create a new service to handle the calls and implement the BaseService
+
+
+Backend WebAPI:
+
+NB:
+DO NOT USE ENTITY FRAMEWORK!
+You need to use Routes on the controllers
+You need to use Dependency Injection on all controllers.
+You need to use the appsettings.json for all configurations.
+You must use status codes on any errors sending back to the client(front end).
+
+a. Create a controller 
+b. Implement the Table class on a model
+c. Implement the IDatabaseHandler interface
+d. Implement the DbDatabaseContext abstract class
