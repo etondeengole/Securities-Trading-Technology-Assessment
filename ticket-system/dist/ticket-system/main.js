@@ -115,7 +115,7 @@ class AppComponent {
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
 AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 1, vars: 0, template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "router-outlet");
-    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAvYXBwLmNvbXBvbmVudC5zY3NzIn0= */"] });
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
         args: [{
@@ -247,19 +247,51 @@ class BaseService {
 
 /***/ }),
 
-/***/ "./src/app/models/ticket-request.ts":
-/*!******************************************!*\
-  !*** ./src/app/models/ticket-request.ts ***!
-  \******************************************/
-/*! exports provided: TicketRequest */
+/***/ "./src/app/models/bug.ts":
+/*!*******************************!*\
+  !*** ./src/app/models/bug.ts ***!
+  \*******************************/
+/*! exports provided: Bug */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TicketRequest", function() { return TicketRequest; });
-/* harmony import */ var _base_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base-service */ "./src/app/models/base-service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bug", function() { return Bug; });
+/* harmony import */ var _ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ticket */ "./src/app/models/ticket.ts");
 
-class TicketRequest extends _base_service__WEBPACK_IMPORTED_MODULE_0__["BaseService"] {
+class Bug extends _ticket__WEBPACK_IMPORTED_MODULE_0__["Ticket"] {
+    constructor(httpClient) {
+        super(httpClient);
+        this.httpClient = httpClient;
+    }
+    Save() {
+        console.log(this);
+        let response = super.Put("/Ticket/create", this);
+        return response;
+    }
+    Update() {
+        console.log(this);
+        let response = super.PostReturn("/Ticket/update", this);
+        return response;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/models/enhancement.ts":
+/*!***************************************!*\
+  !*** ./src/app/models/enhancement.ts ***!
+  \***************************************/
+/*! exports provided: Enhancement */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Enhancement", function() { return Enhancement; });
+/* harmony import */ var _ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ticket */ "./src/app/models/ticket.ts");
+
+class Enhancement extends _ticket__WEBPACK_IMPORTED_MODULE_0__["Ticket"] {
     constructor(httpClient) {
         super(httpClient);
         this.httpClient = httpClient;
@@ -278,8 +310,34 @@ class TicketRequest extends _base_service__WEBPACK_IMPORTED_MODULE_0__["BaseServ
         let response = super.PostReturn("/Ticket/findAll", this);
         return response;
     }
+}
+
+
+/***/ }),
+
+/***/ "./src/app/models/ticket.ts":
+/*!**********************************!*\
+  !*** ./src/app/models/ticket.ts ***!
+  \**********************************/
+/*! exports provided: Ticket */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Ticket", function() { return Ticket; });
+/* harmony import */ var _base_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base-service */ "./src/app/models/base-service.ts");
+
+class Ticket extends _base_service__WEBPACK_IMPORTED_MODULE_0__["BaseService"] {
+    constructor(httpClient) {
+        super(httpClient);
+        this.httpClient = httpClient;
+    }
     DeleteTicket(id) {
         let response = super.Delete("/Ticket/delete", id);
+        return response;
+    }
+    GetAllTickets() {
+        let response = super.PostReturn("/Ticket/findAll", this);
         return response;
     }
 }
@@ -299,10 +357,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ViewTicketsComponent", function() { return ViewTicketsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _models_ticket_request__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/ticket-request */ "./src/app/models/ticket-request.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+/* harmony import */ var _models_bug__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../models/bug */ "./src/app/models/bug.ts");
+/* harmony import */ var _models_enhancement__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/enhancement */ "./src/app/models/enhancement.ts");
+/* harmony import */ var _models_ticket__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../models/ticket */ "./src/app/models/ticket.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+
+
 
 
 
@@ -440,51 +502,80 @@ class ViewTicketsComponent {
         this.viewTicketList = [];
     }
     SaveTicket() {
-        let ticket = new _models_ticket_request__WEBPACK_IMPORTED_MODULE_2__["TicketRequest"](this.httpClient);
-        ticket.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
-        ticket.Title = this.ticketTitle;
-        ticket.Type = this.ticketType;
-        ticket.Description = this.ticketDescription;
-        ticket.Product = this.ticketProduct;
-        ticket.ClientDescription = this.ticketClientDescription;
-        ticket.State = this.ticketState;
-        ticket.Effort = this.ticketEffort;
-        ticket.Id = this.ticketId;
-        if (this.ticketIsNew) {
-            let response = ticket.Save();
-            response.then(val => {
-                this.InitializeTicketItem();
-                this.GetAllTickets();
-            }, error => {
-                Promise.reject(error);
-            });
+        if (this.ticketType === "Bug") {
+            let ticket = new _models_bug__WEBPACK_IMPORTED_MODULE_2__["Bug"](this.httpClient);
+            ticket.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
+            ticket.Title = this.ticketTitle;
+            ticket.Type = this.ticketType;
+            ticket.Description = this.ticketDescription;
+            ticket.State = this.ticketState;
+            ticket.Effort = this.ticketEffort;
+            ticket.Id = this.ticketId;
+            if (this.ticketIsNew) {
+                let response = ticket.Save();
+                response.then(val => {
+                    this.InitializeTicketItem();
+                    this.GetAllTickets();
+                }, error => {
+                    Promise.reject(error);
+                });
+            }
+            else {
+                let response = ticket.Update();
+                response.then(val => {
+                    this.GetAllTickets();
+                }, error => {
+                    Promise.reject(error);
+                });
+            }
         }
         else {
-            let response = ticket.Update();
-            response.then(val => {
-                this.GetAllTickets();
-            }, error => {
-                Promise.reject(error);
-            });
+            let ticket = new _models_enhancement__WEBPACK_IMPORTED_MODULE_3__["Enhancement"](this.httpClient);
+            ticket.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
+            ticket.Title = this.ticketTitle;
+            ticket.Type = this.ticketType;
+            ticket.Description = this.ticketDescription;
+            ticket.Product = this.ticketProduct;
+            ticket.ClientDescription = this.ticketClientDescription;
+            ticket.State = this.ticketState;
+            ticket.Effort = this.ticketEffort;
+            ticket.Id = this.ticketId;
+            if (this.ticketIsNew) {
+                let response = ticket.Save();
+                response.then(val => {
+                    this.InitializeTicketItem();
+                    this.GetAllTickets();
+                }, error => {
+                    Promise.reject(error);
+                });
+            }
+            else {
+                let response = ticket.Update();
+                response.then(val => {
+                    this.GetAllTickets();
+                }, error => {
+                    Promise.reject(error);
+                });
+            }
         }
         this.viewTicketListIsVissible = true;
         this.editTicketIsVissible = false;
     }
     GetAllTickets() {
-        this.ticketRequest = new _models_ticket_request__WEBPACK_IMPORTED_MODULE_2__["TicketRequest"](this.httpClient);
-        this.ticketRequest.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
-        let response = this.ticketRequest.GetAllTickets();
-        this.ticketType = "Bug";
-        response.then(val => {
-            let jsonString = JSON.stringify(val);
-            this.viewTicketList = Array();
+        let ticketRequest = new _models_ticket__WEBPACK_IMPORTED_MODULE_4__["Ticket"](this.httpClient);
+        ticketRequest.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
+        let response = ticketRequest.GetAllTickets();
+        response.then(value => {
+            let jsonString = JSON.stringify(value);
+            this.viewTicketList = new Array();
             this.viewTicketList = JSON.parse(jsonString);
+            console.log(this.viewTicketList);
         });
     }
     DeleteTicket(id) {
-        this.ticketRequest = new _models_ticket_request__WEBPACK_IMPORTED_MODULE_2__["TicketRequest"](this.httpClient);
-        this.ticketRequest.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
-        let response = this.ticketRequest.DeleteTicket(id);
+        let ticketRequest = new _models_ticket__WEBPACK_IMPORTED_MODULE_4__["Ticket"](this.httpClient);
+        ticketRequest.appSettings.BaseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiBaseUrl;
+        let response = ticketRequest.DeleteTicket(id);
         response.then(val => {
             this.GetAllTickets();
         }, error => {
@@ -492,7 +583,7 @@ class ViewTicketsComponent {
         });
     }
 }
-ViewTicketsComponent.ɵfac = function ViewTicketsComponent_Factory(t) { return new (t || ViewTicketsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"])); };
+ViewTicketsComponent.ɵfac = function ViewTicketsComponent_Factory(t) { return new (t || ViewTicketsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])); };
 ViewTicketsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ViewTicketsComponent, selectors: [["app-view-tickets"]], decls: 86, vars: 16, consts: [[1, "btn", "btn-primary", 3, "click"], [1, "container"], [1, "row", "ticket-edit", 3, "ngClass"], [3, "ngSubmit"], ["f", "ngForm"], ["id", "user-data"], [2, "width", "30%"], ["for", "tickettype"], ["id", "tickettype", "name", "tickettype", 1, "form-control", 3, "ngModel", "ngModelChange"], [3, "value", 4, "ngFor", "ngForOf"], ["for", "ticketTitle"], ["type", "text", "id", "ticketTitle", "name", "ticketTitle", 1, "form-control", 3, "ngModel", "ngModelChange"], ["id", "ticketstate", "name", "ticketstate", 1, "form-control", 3, "ngModel", "ngModelChange"], ["for", "ticketdescription"], ["type", "text", "id", "ticketdescription", "name", "ticketdescription", 1, "form-control", 3, "ngModel", "ngModelChange"], ["for", "ticketeffort"], ["type", "text", "id", "ticketeffort", "name", "ticketeffort", 1, "form-control", 3, "ngModel", "ngModelChange"], [3, "ngClass"], ["for", "ticketproduct"], ["type", "text", "id", "ticketproduct", "name", "ticketproduct", 1, "form-control", 3, "ngModel", "ngModelChange"], ["for", "ticketclientdescription"], ["type", "text", "id", "ticketclientdescription", "name", "ticketclientdescription", 1, "form-control", 3, "ngModel", "ngModelChange"], ["type", "hidden", "id", "ticketisnew", "name", "ticketisnew", 3, "ngModel", "ngModelChange"], ["type", "submit", 1, "btn", "btn-primary"], [1, "ticket-list", 3, "ngClass"], [1, "table", 3, "ngClass"], [4, "ngFor", "ngForOf"], [3, "value"], ["type", "button", "value", "edit", 3, "click"], ["type", "button", "value", "delete", 3, "click"]], template: function ViewTicketsComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "button", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ViewTicketsComponent_Template_button_click_0_listener() { return ctx.GetAllTickets(); });
@@ -683,7 +774,7 @@ ViewTicketsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", ctx.viewTicketList.length > 0 ? "show table" : "hide");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](23);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.viewTicketList);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NgForm"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NgModel"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ɵangular_packages_forms_forms_x"]], styles: [".hide[_ngcontent-%COMP%] {\n  visibility: hidden;\n  height: 0px;\n}\n\n.show[_ngcontent-%COMP%] {\n  visibility: visible;\n  height: auto;\n}\n\ntable[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC92aWV3LXRpY2tldHMvdmlldy10aWNrZXRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksa0JBQUE7RUFDQSxXQUFBO0FBQ0o7O0FBRUE7RUFDSSxtQkFBQTtFQUNBLFlBQUE7QUFDSjs7QUFFQTtFQUNJLFdBQUE7RUFDQSxnQkFBQTtBQUNKIiwiZmlsZSI6ImFwcC92aWV3LXRpY2tldHMvdmlldy10aWNrZXRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhpZGUge1xyXG4gICAgdmlzaWJpbGl0eTogaGlkZGVuO1xyXG4gICAgaGVpZ2h0OiAwcHg7XHJcbn1cclxuXHJcbi5zaG93IHtcclxuICAgIHZpc2liaWxpdHk6IHZpc2libGU7XHJcbiAgICBoZWlnaHQ6IGF1dG87XHJcbn1cclxuXHJcbnRhYmxlIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxufSJdfQ== */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["NgClass"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgForm"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ɵangular_packages_forms_forms_x"]], styles: [".hide[_ngcontent-%COMP%] {\n  visibility: hidden;\n  height: 0px;\n}\n\n.show[_ngcontent-%COMP%] {\n  visibility: visible;\n  height: auto;\n}\n\ntable[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZpZXctdGlja2V0cy92aWV3LXRpY2tldHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxrQkFBQTtFQUNBLFdBQUE7QUFDSjs7QUFFQTtFQUNJLG1CQUFBO0VBQ0EsWUFBQTtBQUNKOztBQUVBO0VBQ0ksV0FBQTtFQUNBLGdCQUFBO0FBQ0oiLCJmaWxlIjoidmlldy10aWNrZXRzL3ZpZXctdGlja2V0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oaWRlIHtcclxuICAgIHZpc2liaWxpdHk6IGhpZGRlbjtcclxuICAgIGhlaWdodDogMHB4O1xyXG59XHJcblxyXG4uc2hvdyB7XHJcbiAgICB2aXNpYmlsaXR5OiB2aXNpYmxlO1xyXG4gICAgaGVpZ2h0OiBhdXRvO1xyXG59XHJcblxyXG50YWJsZSB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbn0iXX0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ViewTicketsComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -691,7 +782,7 @@ ViewTicketsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
                 templateUrl: './view-tickets.component.html',
                 styleUrls: ['./view-tickets.component.scss']
             }]
-    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }]; }, null); })();
+    }], function () { return [{ type: _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"] }]; }, null); })();
 
 
 /***/ }),

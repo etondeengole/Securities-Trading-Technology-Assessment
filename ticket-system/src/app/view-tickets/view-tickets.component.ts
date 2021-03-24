@@ -6,8 +6,6 @@ import { Bug } from '../models/bug';
 import { Enhancement } from '../models/enhancement';
 import { Ticket } from '../models/ticket';
 import { TicketItem } from '../models/ticket-item';
-import { TicketList } from '../models/ticket-list';
-import { TicketRequest } from '../models/ticket-request';
 
 @Component({
   selector: 'app-view-tickets',
@@ -16,7 +14,6 @@ import { TicketRequest } from '../models/ticket-request';
 })
 export class ViewTicketsComponent implements OnInit {
   headers: HttpHeaders;
-  ticketList: TicketList;
   viewTicketList: TicketItem[] = [];
   apiUrl: string;
   ticketTypes : string[] = ["Bug", "Enhancment"];
@@ -32,7 +29,6 @@ export class ViewTicketsComponent implements OnInit {
   ticketIsNew: boolean = true;
   ticketId: number;
 
-  ticketRequest: TicketRequest;
   editTicketIsVissible: boolean = false;;
   viewTicketListIsVissible: boolean = true;
 
@@ -68,7 +64,7 @@ export class ViewTicketsComponent implements OnInit {
     this.viewTicketList = [];
   }
   
-    EditTicket(ticket: TicketRequest): void {
+    EditTicket(ticket: TicketItem): void {
       let jsonString: string = JSON.stringify(ticket);
       let ticketReq = JSON.parse(jsonString);
       this.ticketTitle = ticketReq.title;
@@ -165,6 +161,7 @@ export class ViewTicketsComponent implements OnInit {
     let ticketRequest = new Ticket(this.httpClient);
     ticketRequest.appSettings.BaseUrl = environment.apiBaseUrl;
     let response: Promise<Ticket> = ticketRequest.GetAllTickets();
+    this.ticketType = "Bug";
     response.then(value => {
       let jsonString: string = JSON.stringify(value);
       this.viewTicketList = new Array<TicketItem>();
@@ -175,9 +172,9 @@ export class ViewTicketsComponent implements OnInit {
   }
 
   DeleteTicket(id: number): void {
-    this.ticketRequest = new TicketRequest(this.httpClient);
-    this.ticketRequest.appSettings.BaseUrl = environment.apiBaseUrl;
-    let response = this.ticketRequest.DeleteTicket(id);
+    let ticketRequest = new Ticket(this.httpClient);
+    ticketRequest.appSettings.BaseUrl = environment.apiBaseUrl;
+    let response = ticketRequest.DeleteTicket(id);
     response.then(val => 
       {
           this.GetAllTickets();
