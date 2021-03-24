@@ -2,6 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { Bug } from '../models/bug';
+import { Enhancement } from '../models/enhancement';
+import { Ticket } from '../models/ticket';
+import { TicketItem } from '../models/ticket-item';
 import { TicketList } from '../models/ticket-list';
 import { TicketRequest } from '../models/ticket-request';
 
@@ -13,7 +17,7 @@ import { TicketRequest } from '../models/ticket-request';
 export class ViewTicketsComponent implements OnInit {
   headers: HttpHeaders;
   ticketList: TicketList;
-  viewTicketList: TicketRequest[] = [];
+  viewTicketList: TicketItem[] = [];
   apiUrl: string;
   ticketTypes : string[] = ["Bug", "Enhancment"];
   ticketStates: string[] = ["Not yet started", "Working on", "Testing", "Done"];
@@ -42,9 +46,10 @@ export class ViewTicketsComponent implements OnInit {
       this.InitializeTicketItem();
     }
 
-    IsBugType(type: string): boolean {
-      return type === "Bug";
-    }
+  IsBugType(type: string): boolean {
+    return type === "Bug";
+  }
+
   InitializeTicketItem() {
     this.ticketTitle = "";
     this.ticketType = "Bug";
@@ -81,54 +86,92 @@ export class ViewTicketsComponent implements OnInit {
     }
 
     SaveTicket(): void {
-      let ticket: TicketRequest = new TicketRequest(this.httpClient);
-      ticket.appSettings.BaseUrl = environment.apiBaseUrl;
-      ticket.Title = this.ticketTitle;
-      ticket.Type = this.ticketType;
-      ticket.Description = this.ticketDescription;
-      ticket.Product = this.ticketProduct;
-      ticket.ClientDescription = this.ticketClientDescription;
-      ticket.State = this.ticketState;
-      ticket.Effort = this.ticketEffort; 
-      ticket.Id = this.ticketId; 
-      if (this.ticketIsNew) {
-        let response = ticket.Save();
-        response.then(val => 
-          {
-              this.InitializeTicketItem();
-              this.GetAllTickets();
-          },
-          error => 
-          {
-            Promise.reject(error);
-          });
-      }
-      else {
-        let response = ticket.Update();
-        response.then(val => 
-          {
-              this.GetAllTickets();
-          },
-          error => 
-          {
-            Promise.reject(error);
-          });
-      }      
+        if (this.ticketType === "Bug")
+        {
+          let ticket: Bug = new Bug(this.httpClient);
+          ticket.appSettings.BaseUrl = environment.apiBaseUrl;
+          ticket.Title = this.ticketTitle;
+          ticket.Type = this.ticketType;
+          ticket.Description = this.ticketDescription;
+          ticket.State = this.ticketState;
+          ticket.Effort = this.ticketEffort; 
+          ticket.Id = this.ticketId; 
+          if (this.ticketIsNew) {
+            let response = ticket.Save();
+            response.then(val => 
+              {
+                  this.InitializeTicketItem();
+                  this.GetAllTickets();
+              },
+              error => 
+              {
+                Promise.reject(error);
+              });
+          }
+          else {
+            let response = ticket.Update();
+            response.then(val => 
+              {
+                  this.GetAllTickets();
+              },
+              error => 
+              {
+                Promise.reject(error);
+              });
+          }          
+        }
+        else
+        {
+          let ticket: Enhancement = new Enhancement(this.httpClient);
+          ticket.appSettings.BaseUrl = environment.apiBaseUrl;
+          ticket.Title = this.ticketTitle;
+          ticket.Type = this.ticketType;
+          ticket.Description = this.ticketDescription;
+          ticket.Product = this.ticketProduct;
+          ticket.ClientDescription = this.ticketClientDescription;
+          ticket.State = this.ticketState;
+          ticket.Effort = this.ticketEffort; 
+          ticket.Id = this.ticketId;
+          if (this.ticketIsNew) {
+            let response = ticket.Save();
+            response.then(val => 
+              {
+                  this.InitializeTicketItem();
+                  this.GetAllTickets();
+              },
+              error => 
+              {
+                Promise.reject(error);
+              });
+          }
+          else {
+            let response = ticket.Update();
+            response.then(val => 
+              {
+                  this.GetAllTickets();
+              },
+              error => 
+              {
+                Promise.reject(error);
+              });
+          } 
+        }      
+         
       this.viewTicketListIsVissible = true;
       this.editTicketIsVissible = false;
     }
 
   GetAllTickets() {
-    this.ticketRequest = new TicketRequest(this.httpClient);
-    this.ticketRequest.appSettings.BaseUrl = environment.apiBaseUrl;
-    let response = this.ticketRequest.GetAllTickets();
-    this.ticketType = "Bug";
-    response.then(val => 
-      {
-          let jsonString = JSON.stringify(val);
-          this.viewTicketList = Array<TicketRequest>();
-          this.viewTicketList = JSON.parse(jsonString);
-      });
+    let ticketRequest = new Ticket(this.httpClient);
+    ticketRequest.appSettings.BaseUrl = environment.apiBaseUrl;
+    let response: Promise<Ticket> = ticketRequest.GetAllTickets();
+    response.then(value => {
+      let jsonString: string = JSON.stringify(value);
+      this.viewTicketList = new Array<TicketItem>();
+      this.viewTicketList = JSON.parse(jsonString);
+      console.log(this.viewTicketList);
+    })
+
   }
 
   DeleteTicket(id: number): void {
