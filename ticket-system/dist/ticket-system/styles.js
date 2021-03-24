@@ -439,7 +439,7 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Etonde\Desktop\InterviewAngular\InterviewAngular\ticket-system\src\styles.scss */"./src/styles.scss");
+module.exports = __webpack_require__(/*! C:\Users\Etonde\Documents\Securities-Trading-Technology-Assessment\ticket-system\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })

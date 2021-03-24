@@ -1,0 +1,87 @@
+<button class="btn btn-primary" (click)="GetAllTickets()">View Tickets</button>
+    <button class="btn btn-primary" (click)="NewTicket()">New Tickets</button>
+<div class="container">
+    <div class="row ticket-edit" [ngClass]="!editTicketIsVissible ? 'hide' : 'show'">
+        <h2>Edit Ticket</h2>
+        <form (ngSubmit)="SaveTicket()" #f="ngForm">
+            <div id="user-data">
+                <table style="width: 30%;">
+                    <tr>
+                        <th><label for="tickettype">Ticket type:</label></th>
+                        <td>
+                            <select id="tickettype" class="form-control" [(ngModel)]="ticketType" name="tickettype">
+                            <option [value]="ticketType" *ngFor="let ticketType of ticketTypes">{{ticketType}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="ticketTitle">Ticket Title:</label></th>
+                        <td><input type="text" id="ticketTitle" class="form-control" [(ngModel)]="ticketTitle" name="ticketTitle"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="tickettype">Ticket state:</label></th>
+                        <td>
+                            <select id="ticketstate" class="form-control" [(ngModel)]="ticketState" name="ticketstate">
+                                <option [value]="ticketState" *ngFor="let ticketState of ticketStates">{{ticketState}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="ticketdescription">Description:</label></th>
+                        <td><input type="text" id="ticketdescription" class="form-control" [(ngModel)]="ticketDescription" name="ticketdescription"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="ticketeffort">Effort:</label></th>
+                        <td><input type="text" id="ticketeffort" class="form-control" [(ngModel)]="ticketEffort" name="ticketeffort"></td>
+                    </tr>
+                    <tr [ngClass]="IsBugType(ticketType) ? 'hide' : 'show'">
+                        <th><label for="ticketproduct">Product:</label></th>
+                        <td><input type="text" id="ticketproduct" class="form-control" [(ngModel)]="ticketProduct" name="ticketproduct"></td>
+                    </tr>
+                    <tr [ngClass]="IsBugType(ticketType) ? 'hide' : 'show'">
+                        <th><label for="ticketclientdescription">Client Description:</label></th>
+                        <td><input type="text" id="ticketclientdescription" class="form-control" [(ngModel)]="ticketClientDescription" name="ticketclientdescription"></td>
+                    </tr>
+                </table>
+                <input type="hidden" id="ticketisnew" [(ngModel)]="ticketIsNew" name="ticketisnew" />
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>        
+    </form>
+    </div>    
+    <div class="ticket-list" [ngClass]="viewTicketListIsVissible ? 'show' : 'hide'">    
+        <h2>Ticket List</h2>        
+        <table [ngClass]="this.viewTicketList.length > 0 ? 'show table' : 'hide'" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>State</th>
+                    <th>Title</th>
+                    <th>Create Date</th>
+                    <th>Description</th>
+                    <th>Effort</th>
+                    <th>Product</th>
+                    <th>Client Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ticket of this.viewTicketList">
+                    <td>{{ticket.id}}</td>
+                    <td>{{ticket.type}}</td>
+                    <td>{{ticket.state}}</td>
+                    <td>{{ticket.title}}</td>
+                    <td>{{ticket.createDate}}</td>
+                    <td>{{ticket.description}}</td>
+                    <td>{{ticket.effort}}</td>
+                    <td>{{ticket.product}}</td>
+                    <td>{{ticket.clientDescription}}</td>
+                    <td>
+                        <input type="button" value="edit" (click)="EditTicket(ticket)">
+                        <input type="button" value="delete" (click)="DeleteTicket(ticket.id)">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
